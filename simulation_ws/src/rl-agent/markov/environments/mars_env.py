@@ -1,7 +1,7 @@
 from __future__ import print_function
 
 import time
-import boto3
+#import boto3
 import gym
 import numpy as np
 from gym import spaces
@@ -159,7 +159,7 @@ class MarsEnv(gym.Env):
     def reset(self):
         print('Total Episodic Reward=%.2f' % self.reward_in_episode,
               'Total Episodic Steps=%.2f' % self.steps)
-        self.send_reward_to_cloudwatch(self.reward_in_episode)
+        #self.send_reward_to_cloudwatch(self.reward_in_episode)
 
         # Reset global episodic values
         self.reward = None
@@ -560,32 +560,32 @@ class MarsEnv(gym.Env):
     '''
     DO NOT EDIT - Function to wrote episodic rewards to CloudWatch
     '''
-    def send_reward_to_cloudwatch(self, reward):
-        try:
-            session = boto3.session.Session()
-            cloudwatch_client = session.client('cloudwatch', region_name=self.aws_region)
-            cloudwatch_client.put_metric_data(
-                MetricData=[
-                    {
-                        'MetricName': 'Episode_Reward',
-                        'Unit': 'None',
-                        'Value': reward
-                    },
-                    {
-                        'MetricName': 'Episode_Steps',
-                        'Unit': 'None',
-                        'Value': self.steps,
-                    },
-                    {
-                        'MetricName': 'DistanceToCheckpoint',
-                        'Unit': 'None',
-                        'Value': self.current_distance_to_checkpoint
-                    }
-                ],
-                Namespace='AWS_NASA_JPL_OSR_Challenge'
-            )
-        except Exception as err:
-            print("Error in the send_reward_to_cloudwatch function: {}".format(err))
+#    def send_reward_to_cloudwatch(self, reward):
+#        try:
+#            session = boto3.session.Session()
+#            cloudwatch_client = session.client('cloudwatch', region_name=self.aws_region)
+#            cloudwatch_client.put_metric_data(
+#                MetricData=[
+#                    {
+#                        'MetricName': 'Episode_Reward',
+#                        'Unit': 'None',
+#                        'Value': reward
+#                    },
+#                    {
+#                        'MetricName': 'Episode_Steps',
+ #                       'Unit': 'None',
+#                        'Value': self.steps,
+#                    },
+#                    {
+#                        'MetricName': 'DistanceToCheckpoint',
+#                        'Unit': 'None',
+#                        'Value': self.current_distance_to_checkpoint
+#                    }
+#                ],
+#                Namespace='AWS_NASA_JPL_OSR_Challenge'
+#            )
+#        except Exception as err:
+#            print("Error in the send_reward_to_cloudwatch function: {}".format(err))
 
 
 '''
